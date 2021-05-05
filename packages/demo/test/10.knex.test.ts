@@ -47,12 +47,6 @@ describe(filename, () => {
           assert(! data.__knexTxId)
         })
 
-      await knex('tb_user')
-        .select('*')
-        .on('query', (data: OnQueryData) => {
-          assert(! data.__knexTxId)
-          // console.log('0023', data)
-        })
     })
 
   })
