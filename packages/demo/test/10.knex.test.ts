@@ -28,7 +28,7 @@ describe(filename, () => {
       const trx = await knex.transaction()
       await knex('tb_user')
         .transacting(trx)
-        .forUpdate()
+        // .forUpdate()
         .select('*')
         .where('uid', 1)
         .on('query', (data: OnQueryData) => {
@@ -40,7 +40,7 @@ describe(filename, () => {
           return rows
         })
 
-      await knex('tb_user_ext')
+      await knex('tb_user')
         .select('*')
         .on('query', (data: OnQueryData) => {
           console.log('02:', data.__knexTxId)
