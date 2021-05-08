@@ -26,6 +26,14 @@ describe(filename, () => {
     it('tb_user', async () => {
       const knex = inst
       const trx = await knex.transaction()
+
+      await knex('tb_user')
+        .select('*')
+        .on('query', (data: OnQueryData) => {
+          console.log('00:', data.__knexTxId) // here undefined
+          assert(! data.__knexTxId)
+        })
+
       await knex('tb_user')
         .transacting(trx)
         // .forUpdate()
@@ -43,7 +51,7 @@ describe(filename, () => {
       await knex('tb_user')
         .select('*')
         .on('query', (data: OnQueryData) => {
-          console.log('02:', data.__knexTxId)
+          console.log('02:', data.__knexTxId) // here is "trx2"
           assert(! data.__knexTxId)
         })
 
